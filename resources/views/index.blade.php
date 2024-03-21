@@ -5,5 +5,5 @@
 @endsection
 
 @section('content')
-    <h1>Hello, world!</h1>
+    <h1>Selamat Datang di Perpustakaan MI PSM Sidorejo !</h1>
 @endsection
