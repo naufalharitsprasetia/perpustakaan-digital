@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->uuid('id_buku')->primary();
-            $table->string('gambar_buku')->nullable();
+            $table->string('gambar_buku')->default('default.png');
             $table->string('nama_buku');
             $table->string('kelas_buku');
             $table->string('nomer_rak_buku');

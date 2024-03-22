@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
     public function dashboard()
     {
+        date_default_timezone_set('Asia/Jakarta');
         $books = Book::where('buku_is_deleted', false)->get();
         return view('dashboard', [
             'active' => 'dashboard',
-            'books' => $books
+            'books' => $books,
+            'sekarang' => now()
         ]);
     }
     /**
@@ -43,20 +46,36 @@ class BookController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedData = $request->validate([
-            'nama_buku' => 'required',
-            'kelas_buku' => 'required',
-            'nomer_rak_buku' => 'required',
-            'isbn_buku' => 'required',
-            'penulis_buku' => 'required',
-            'penerbit_buku' => 'required',
-            'urutan_buku' => 'nullable',
-            'kode_buku' => 'nullable',
-        ]);
+        date_default_timezone_set('Asia/Jakarta');
+        $validatedData = $request->validate(
+            [
+                'gambar_buku' => 'image|file|max:1024',
+                'nama_buku' => 'required',
+                'kelas_buku' => 'required',
+                'nomer_rak_buku' => 'required',
+                'isbn_buku' => 'required',
+                'penulis_buku' => 'required',
+                'penerbit_buku' => 'required',
+                'urutan_buku' => 'nullable',
+                'kode_buku' => 'nullable',
+            ],
+            [
+                'gambar_buku.image' => 'Gambar Program harus berupa gambar',
+                'gambar_buku.file' => 'Gambar Program harus berupa file',
+                'gambar_buku.max' => 'Gambar Program tidak boleh lebih dari 1MB',
+            ]
+        );
         //
         $validatedData['id_buku'] = Str::uuid();
         // dd($validatedData);
-        Book::create($validatedData);
+        $file = $request->file('gambar_buku');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $tujuan_upload = 'assets/buku';
+        $file->move($tujuan_upload, $nama_file);
+        $validatedData['gambar_buku'] = $nama_file;
+        // dd($validatedData);
+        // Book::create($validatedData);
+        DB::table('books')->insert($validatedData);
 
         // Ambil data log terbaru berdasarkan log_created_at
         // $latestLog = Log::latest('log_created_at')->first();
@@ -101,7 +120,9 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         //
+        date_default_timezone_set('Asia/Jakarta');
         $validatedData = $request->validate([
+            'gambar_buku' => 'image|file|max:1024',
             'nama_buku' => 'required',
             'kelas_buku' => 'required',
             'nomer_rak_buku' => 'required',
@@ -111,6 +132,17 @@ class BookController extends Controller
             'urutan_buku' => 'nullable',
             'kode_buku' => 'nullable',
         ]);
+        if ($request->hasFile('gambar_buku')) {
+            $file = $request->file('gambar_buku');
+            $nama_file = time() . "_" . $file->getClientOriginalName();
+            $tujuan_upload = 'assets/buku';
+            $file->move($tujuan_upload, $nama_file);
+            $validatedData['gambar_buku'] = $nama_file;
+            // hapus Data gambar lama
+            if ($book->gambar_buku != "default.png") {
+                unlink('assets/buku/' . $book->gambar_buku);
+            }
+        }
         Book::where('id_buku', $book->id_buku)->update($validatedData);
         return redirect('/dashboard')->with('success', 'Data Buku telah di perbaharui!');
     }
@@ -122,6 +154,11 @@ class BookController extends Controller
     {
         //
         $deleted_is_true['buku_is_deleted'] = true;
+        // hapus Data gambar 
+        if ($book->gambar_buku != "default.png") {
+            unlink('assets/buku/' . $book->gambar_buku);
+        }
+
         Book::where('id_buku', $book->id_buku)->update($deleted_is_true);
         return redirect('/dashboard')->with('success', 'Data Buku telah di hapus!');
     }

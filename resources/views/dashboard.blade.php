@@ -6,9 +6,22 @@
 
 @section('content')
     <h1>Dashboard</h1>
-
+    <span>Tanggal | Waktu : {{ $sekarang }}</span><br><br>
     <a href="/tambah-buku" class="btn btn-primary">Tambahkan Data buku</a>
     <br>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <form action="/dashboard">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search...." name="search"
+                        value="{{ request('search') }}">
+                    <button class="btn btn-danger" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <hr>
     @if (session()->has('success'))
         <div class="alert alert-success col-lg-12" role="alert">

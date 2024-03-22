@@ -7,11 +7,22 @@
 @section('content')
     <h1>Buku-Buku</h1>
     <hr>
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-6">
+            <form action="/books">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search...." name="search"
+                        value="{{ request('search') }}">
+                    <button class="btn btn-danger" type="submit">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <br>
-    <div class="row d-flex justify-content-around gap-2">
+    <div class="row book-container d-flex justify-content-around gap-2">
         @foreach ($books as $book)
             {{-- Card Buku --}}
-            <div class="card mb-3 col-2 px-0">
+            <div class="card book-card mb-3 col-2 px-0">
                 <img src="/assets/buku/{{ $book->gambar_buku }}" class="card-img-top" alt="..." width="100">
                 <div class="card-body">
                     <h5 class="card-title">{{ $book->nama_buku }}</h5>

@@ -8,13 +8,32 @@
     <h1>Tambah Buku</h1>
     <a href="/dashboard" class="btn btn-primary">Kembali</a>
     <hr>
-    <form action="/edit-buku/{{ $book->id_buku }}" method="post" class="mt-4">
+    <form action="/edit-buku/{{ $book->id_buku }}" method="post" class="mt-4" enctype="multipart/form-data">
         @method('put')
         @csrf
         <h2>Form Penambahan buku</h2>
+        <div class="mb-3">
+            @if ($book->gambar_buku)
+                <img src="/assets/buku/{{ $book->gambar_buku }}" class="img-preview mb-3 d-block" alt=""
+                    width="200">
+            @else
+                <img class="img-preview mb-3" alt="" width="200">
+            @endif
+            <img class="img-preview mb-3" width="200">
+            <input class="form-control @error('gambar_buku') is-invalid @enderror" type="file" id="image"
+                name="gambar_buku" onchange="previewImage()">
+            <label for="image" class="form-label">Masukkan Gambar Cover buku (Max-size : 1mb / 1024kb) - kalau bisa
+                potrait - lebar 240px -
+                tinggi 320px - rasio aspek 3:4 - (**boleh kosong)</label>
+            @error('gambar_buku')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control @error('nama_buku') is-invalid @enderror" id="nama_buku" name="nama_buku"
-                value="{{ old('nama_buku', $book->nama_buku) }}" placeholder="Nama Buku">
+            <input type="text" class="form-control @error('nama_buku') is-invalid @enderror" id="nama_buku"
+                name="nama_buku" value="{{ old('nama_buku', $book->nama_buku) }}" placeholder="Nama Buku">
             <label for="nama_buku">Nama buku</label>
             @error('nama_buku')
                 <div class="invalid-feedback">
@@ -95,4 +114,17 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <script>
+        function previewImage() {
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
+            imgPreview.style.display = 'block';
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
+    </script>
 @endsection

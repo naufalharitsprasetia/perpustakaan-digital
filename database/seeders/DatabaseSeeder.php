@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         //1
         Book::create([
             'id_buku' => Str::uuid(),
-            'gambar_buku' => 'buku1.jpeg',
+            'gambar_buku' => 'default.png',
             'nama_buku' => 'Matematika',
             'kelas_buku' => '1',
             'nomer_rak_buku' => '1',
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         //2
         Book::create([
             'id_buku' => Str::uuid(),
-            'gambar_buku' => 'buku2.jpeg',
+            'gambar_buku' => 'default.png',
             'nama_buku' => 'Belajar Matematika',
             'kelas_buku' => '1',
             'nomer_rak_buku' => '1',
@@ -59,7 +59,7 @@ class DatabaseSeeder extends Seeder
         // 3
         Book::create([
             'id_buku' => Str::uuid(),
-            'gambar_buku' => 'buku3.jpeg',
+            'gambar_buku' => 'default.png',
             'nama_buku' => 'Buku Kerja Matematika Semester 2',
             'kelas_buku' => '1',
             'nomer_rak_buku' => '1',
@@ -72,7 +72,7 @@ class DatabaseSeeder extends Seeder
         // 4
         Book::create([
             'id_buku' => Str::uuid(),
-            'gambar_buku' => 'buku4.jpeg',
+            'gambar_buku' => 'default.png',
             'nama_buku' => 'Cerdas berhitung Matematika',
             'kelas_buku' => '3',
             'nomer_rak_buku' => '1',
@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         // 5
         Book::create([
             'id_buku' => Str::uuid(),
-            'gambar_buku' => 'buku5.jpeg',
+            'gambar_buku' => 'default.png',
             'nama_buku' => 'Senang Belajar Bahasa Indonesia',
             'kelas_buku' => '3',
             'nomer_rak_buku' => '1',

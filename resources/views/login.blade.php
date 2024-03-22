@@ -50,7 +50,6 @@
                         Sign in
                     </button>
                 </form>
-                <small class="d-block text-center mt-3 ">Not Registered? <a href="/register">Register Now!</a></small>
                 <p class="mt-3 mb-3 text-body-secondary">Perpustakaan Digital MI PSM Sidorejo| &copy; 2024</p>
             </main>
         </div>
