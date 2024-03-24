@@ -6,7 +6,7 @@
               <h4>Perpustakaan MI PSM Sidorejo</h4>
           </div>
           <div class="footer-container px-2">
-              <a href="" class="text-decoration-none" style="color:black">
+              <a href="https://maps.app.goo.gl/NEMkn466qumsCRxa9" class="text-decoration-none" style="color:black">
                   <div class="content-contact-alamat d-flex gap-2">
                       <i class="bi bi-geo-alt-fill"></i>
                       <p>
@@ -15,7 +15,7 @@
                       </p>
                   </div>
               </a>
-              <a href="" class="text-decoration-none" style="color:black">
+              <a href="https://www.instagram.com/mipsmsidorejo/" class="text-decoration-none" style="color:black">
 
                   <div class="content-contact-instagram d-flex gap-2">
                       <i class="bi bi-instagram"></i>
@@ -24,7 +24,8 @@
                       </p>
                   </div>
               </a>
-              <a href="" class="text-decoration-none" style="color:black">
+              <a href="https://www.facebook.com/p/MI-Psm-Sidorejo-100012295061513/?_rdr" class="text-decoration-none"
+                  style="color:black">
 
                   <div class="content-contact-facebook d-flex gap-2">
                       <i class="bi bi-facebook"></i>
@@ -32,7 +33,7 @@
                           Facebook </p>
                   </div>
               </a>
-              <a href="" class="text-decoration-none" style="color:black">
+              <a href="https://www.youtube.com/@MIPSMSidorejoOfficial" class="text-decoration-none" style="color:black">
                   <div class="content-contact-youtube d-flex gap-2">
                       <i class="bi bi-youtube"></i>
                       <p>
