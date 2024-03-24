@@ -9,10 +9,10 @@
     <hr>
     <div class="row justify-content-center mb-3">
         <div class="col-md-6">
-            <form action="/books">
+            <form action="" method="">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search...." name="search"
-                        value="{{ request('search') }}">
+                    <input type="text" class="form-control" placeholder="Search ..." name="searchBuku"
+                        value="{{ request('searchBuku') }}">
                     <button class="btn btn-danger" type="submit">Search</button>
                 </div>
             </form>
@@ -39,5 +39,13 @@
             </div>
             {{-- End --}}
         @endforeach
+        {{-- Pagination --}}
+        <div class="row g-0 text-center align-items-center mb-3 mt-4">
+            <div class="col-lg-12">
+                <ul class="pagination pagination-separated justify-content-center">
+                    {{ $books->links() }}
+                </ul>
+            </div><!-- end col -->
+        </div><!-- end row -->
     </div>
 @endsection

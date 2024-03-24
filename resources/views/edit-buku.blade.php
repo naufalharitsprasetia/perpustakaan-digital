@@ -22,9 +22,12 @@
             <img class="img-preview mb-3" width="200">
             <input class="form-control @error('gambar_buku') is-invalid @enderror" type="file" id="image"
                 name="gambar_buku" onchange="previewImage()">
-            <label for="image" class="form-label">Masukkan Gambar Cover buku (Max-size : 1mb / 1024kb) - kalau bisa
+            <label for="image" class="form-label">- Masukkan Gambar Cover buku (Max-size : 1mb / 1024kb) - kalau bisa
                 potrait - lebar 240px -
-                tinggi 320px - rasio aspek 3:4 - (**boleh kosong)</label>
+                tinggi 320px - rasio aspek 3:4 - (**boleh kosong)</label><br>
+            <span>- kalau kebesaran filenya silahkan dikecilkan / kompress dulu gambar nya , <a
+                    href="https://www.iloveimg.com/compress-image/compress-jpg" target="_blank">Website untuk
+                    Kompres/memperkecil Gambar</a></span>
             @error('gambar_buku')
                 <div class="invalid-feedback">
                     {{ $message }}

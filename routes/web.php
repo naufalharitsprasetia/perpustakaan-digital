@@ -34,4 +34,4 @@ Route::put('/edit-buku/{book}', [BookController::class, 'update'])->middleware('
 Route::delete('/hapus-buku/{book}', [BookController::class, 'destroy'])->middleware('auth');
 
 // Dashboard
-Route::get('/dashboard', [BookController::class, 'dashboard'])->middleware('auth');
+Route::get('/dashboard', [BookController::class, 'dashboard'])->name('dashboard')->middleware('auth');

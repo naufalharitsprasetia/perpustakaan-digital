@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nama_buku');
             $table->string('kelas_buku');
             $table->string('nomer_rak_buku');
-            $table->string('isbn_buku')->unique();
+            $table->string('isbn_buku');
             $table->string('penerbit_buku');
             $table->string('penulis_buku');
             $table->string('urutan_buku')->nullable();

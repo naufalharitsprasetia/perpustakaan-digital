@@ -9,14 +9,78 @@ use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
-        $books = Book::where('buku_is_deleted', false)->get();
+
+        // Mengambil nilai perPage dari permintaan pengguna, default ke 10 jika tidak ada yang disediakan
+        $perPage = $request->input('perPage', 5);
+
+        $books = Book::where('buku_is_deleted', false)
+            ->when(
+                request('namaBuku'),
+                function ($query, $namaBuku) {
+                    $query->where('nama_buku', 'like', '%' . $namaBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('kelasBuku'),
+                function ($query, $kelasBuku) {
+                    $query->where('kelas_buku', 'like', '%' . $kelasBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('noRakBuku'),
+                function ($query, $noRakBuku) {
+                    $query->where('nomer_rak_buku', 'like', '%' . $noRakBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('isbnBuku'),
+                function ($query, $isbnBuku) {
+                    $query->where('isbn_buku', 'like', '%' . $isbnBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('penulisBuku'),
+                function ($query, $penulisBuku) {
+                    $query->where('penulis_buku', 'like', '%' . $penulisBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('penerbitBuku'),
+                function ($query, $penerbitBuku) {
+                    $query->where('penerbit_buku', 'like', '%' . $penerbitBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('urutanBuku'),
+                function ($query, $urutanBuku) {
+                    $query->where('urutan_buku', 'like', '%' . $urutanBuku . '%');
+                    return $query;
+                }
+            )
+            ->when(
+                request('kodeBuku'),
+                function ($query, $kodeBuku) {
+                    $query->where('kode_buku', 'like', '%' . $kodeBuku . '%');
+                    return $query;
+                }
+            )
+            ->paginate($perPage)
+            ->withQueryString();
+        $totalBuku = count(Book::where('buku_is_deleted', false)->get());
         return view('dashboard', [
             'active' => 'dashboard',
             'books' => $books,
-            'sekarang' => now()
+            'sekarang' => now(),
+            'totalBuku' => $totalBuku
         ]);
     }
     /**
@@ -24,10 +88,28 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::where('buku_is_deleted', false)->get();
+        $books = Book::where('buku_is_deleted', false)
+            ->when(
+                request('searchBuku'),
+                function ($query, $searchBuku) {
+                    $query->where('nama_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('kelas_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('nomer_rak_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('isbn_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('penerbit_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('penulis_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('urutan_buku', 'like', '%' . $searchBuku . '%')
+                        ->orWhere('kode_buku', 'like', '%' . $searchBuku . '%')
+                        ->paginate(10)
+                        ->withQueryString();
+                    return $query;
+                }
+            )
+            ->paginate(10)
+            ->withQueryString();;
         return view('books', [
             'active' => 'books',
-            'books' => $books
+            'books' => $books,
         ]);
     }
     /**
